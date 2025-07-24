@@ -11,15 +11,15 @@ import { ThemeProvider } from '../components/ThemeProvider';
 const firaSans = Fira_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] });
 
 export async function generateMetadata(): Promise<Metadata> {
-  let siteName = 'KatelyaTV'; // 直接写死站点名
+  let siteName = process.env.SITE_NAME || 'KatelyaTV';
   if (process.env.NEXT_PUBLIC_STORAGE_TYPE !== 'd1') {
     const config = await getConfig();
-    siteName = config.SiteConfig.SiteName || 'KatelyaTV';
+    siteName = config.SiteConfig.SiteName;
   }
 
   return {
     title: siteName,
-    description: '影视聚合',
+    description: 'KatelyaTV 影视聚合站',
     manifest: '/manifest.json',
   };
 }
@@ -33,7 +33,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const siteName = 'KatelyaTV';
+  let siteName = process.env.SITE_NAME || 'KatelyaTV';
   let announcement =
     process.env.ANNOUNCEMENT ||
     '本网站仅提供影视信息搜索服务，所有内容均来自第三方网站。本站不存储任何视频资源，不对任何内容的准确性、合法性、完整性负责。';
@@ -41,6 +41,7 @@ export default async function RootLayout({
   let imageProxy = process.env.NEXT_PUBLIC_IMAGE_PROXY || '';
   if (process.env.NEXT_PUBLIC_STORAGE_TYPE !== 'd1') {
     const config = await getConfig();
+    siteName = config.SiteConfig.SiteName;
     announcement = config.SiteConfig.Announcement;
     enableRegister = config.UserConfig.AllowRegister;
     imageProxy = config.SiteConfig.ImageProxy;
@@ -61,22 +62,8 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${firaSans.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid`}
-      >
-        <ThemeProvider
-          attribute='class'
-          defaultTheme='system'
-          enableSystem
-          disableTransitionOnChange
-        >
-          {/* 站点名展示 Logo */}
-          <header className="py-6 text-center">
-            <h1 className="text-4xl sm:text-5xl gradient-text tracking-wide drop-shadow-md">
-              KatelyaTV
-            </h1>
-          </header>
-
+      <body className={`${firaSans.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid`}>
+        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
           <SiteProvider siteName={siteName} announcement={announcement}>
             {children}
           </SiteProvider>

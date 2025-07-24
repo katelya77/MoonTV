@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Fira_Sans } from 'next/font/google';
+import { Urbanist } from 'next/font/google';
 
 import './globals.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -8,7 +8,7 @@ import { getConfig } from '@/lib/config';
 import { SiteProvider } from '../components/SiteProvider';
 import { ThemeProvider } from '../components/ThemeProvider';
 
-const firaSans = Fira_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] });
+const urbanist = Urbanist({ subsets: ['latin'], weight: ['400', '600', '700'] });
 
 export async function generateMetadata(): Promise<Metadata> {
   let siteName = process.env.SITE_NAME || 'KatelyaTV';
@@ -19,7 +19,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: siteName,
-    description: 'KatelyaTV 影视聚合站',
+    description: '影视聚合',
     manifest: '/manifest.json',
   };
 }
@@ -54,7 +54,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang='zh-CN' suppressHydrationWarning>
+    <html lang="zh-CN" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -62,8 +62,10 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className={`${firaSans.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid`}>
-        <ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
+      <body
+        className={`${urbanist.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid animate-fade-in`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <SiteProvider siteName={siteName} announcement={announcement}>
             {children}
           </SiteProvider>

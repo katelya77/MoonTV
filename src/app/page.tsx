@@ -6,7 +6,6 @@ import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { Suspense, useEffect, useState } from 'react';
 
-// 客户端收藏 API
 import {
   clearAllFavorites,
   getAllFavorites,
@@ -29,10 +28,8 @@ function HomeClient() {
   const [hotTvShows, setHotTvShows] = useState<DoubanItem[]>([]);
   const [loading, setLoading] = useState(true);
   const { announcement } = useSite();
-
   const [showAnnouncement, setShowAnnouncement] = useState(false);
 
-  // 检查公告弹窗状态
   useEffect(() => {
     if (typeof window !== 'undefined' && announcement) {
       const hasSeenAnnouncement = localStorage.getItem('hasSeenAnnouncement');
@@ -44,7 +41,6 @@ function HomeClient() {
     }
   }, [announcement]);
 
-  // 收藏夹数据
   type FavoriteItem = {
     id: string;
     source: string;
@@ -62,24 +58,13 @@ function HomeClient() {
     const fetchDoubanData = async () => {
       try {
         setLoading(true);
-
-        // 并行获取热门电影和热门剧集
         const [moviesData, tvShowsData] = await Promise.all([
-          getDoubanCategories({
-            kind: 'movie',
-            category: '热门',
-            type: '全部',
-          }),
+          getDoubanCategories({ kind: 'movie', category: '热门', type: '全部' }),
           getDoubanCategories({ kind: 'tv', category: 'tv', type: 'tv' }),
         ]);
 
-        if (moviesData.code === 200) {
-          setHotMovies(moviesData.list);
-        }
-
-        if (tvShowsData.code === 200) {
-          setHotTvShows(tvShowsData.list);
-        }
+        if (moviesData.code === 200) setHotMovies(moviesData.list);
+        if (tvShowsData.code === 200) setHotTvShows(tvShowsData.list);
       } catch (error) {
         console.error('获取豆瓣数据失败:', error);
       } finally {
@@ -90,19 +75,15 @@ function HomeClient() {
     fetchDoubanData();
   }, []);
 
-  // 处理收藏数据更新的函数
   const updateFavoriteItems = async (allFavorites: Record<string, any>) => {
     const allPlayRecords = await getAllPlayRecords();
 
-    // 根据保存时间排序（从近到远）
     const sorted = Object.entries(allFavorites)
       .sort(([, a], [, b]) => b.save_time - a.save_time)
       .map(([key, fav]) => {
         const plusIndex = key.indexOf('+');
         const source = key.slice(0, plusIndex);
         const id = key.slice(plusIndex + 1);
-
-        // 查找对应的播放记录，获取当前集数
         const playRecord = allPlayRecords[key];
         const currentEpisode = playRecord?.index;
 
@@ -121,7 +102,6 @@ function HomeClient() {
     setFavoriteItems(sorted);
   };
 
-  // 当切换到收藏夹时加载收藏数据
   useEffect(() => {
     if (activeTab !== 'favorites') return;
 
@@ -132,20 +112,16 @@ function HomeClient() {
 
     loadFavorites();
 
-    // 监听收藏更新事件
-    const unsubscribe = subscribeToDataUpdates(
-      'favoritesUpdated',
-      (newFavorites: Record<string, any>) => {
-        updateFavoriteItems(newFavorites);
-      }
-    );
+    const unsubscribe = subscribeToDataUpdates('favoritesUpdated', (newFavorites: Record<string, any>) => {
+      updateFavoriteItems(newFavorites);
+    });
 
     return unsubscribe;
   }, [activeTab]);
 
   const handleCloseAnnouncement = (announcement: string) => {
     setShowAnnouncement(false);
-    localStorage.setItem('hasSeenAnnouncement', announcement); // 记录已查看弹窗
+    localStorage.setItem('hasSeenAnnouncement', announcement);
   };
 
   return (
@@ -163,9 +139,15 @@ function HomeClient() {
           />
         </div>
 
+        {/* 🔥 新增渐变大标题 */}
+        {activeTab === 'home' && (
+          <h1 className='gradient-text text-4xl font-extrabold text-center tracking-wide mb-12'>
+            KatelyaTV
+          </h1>
+        )}
+
         <div className='max-w-[95%] mx-auto'>
           {activeTab === 'favorites' ? (
-            // 收藏夹视图
             <section className='mb-8'>
               <div className='mb-4 flex items-center justify-between'>
                 <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
@@ -202,9 +184,7 @@ function HomeClient() {
               </div>
             </section>
           ) : (
-            // 首页视图
             <>
-              {/* 继续观看 */}
               <ContinueWatching />
 
               {/* 热门电影 */}
@@ -223,8 +203,7 @@ function HomeClient() {
                 </div>
                 <ScrollableRow>
                   {loading
-                    ? // 加载状态显示灰色占位数据
-                      Array.from({ length: 8 }).map((_, index) => (
+                    ? Array.from({ length: 8 }).map((_, index) => (
                         <div
                           key={index}
                           className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
@@ -235,8 +214,7 @@ function HomeClient() {
                           <div className='mt-2 h-4 bg-gray-200 rounded animate-pulse dark:bg-gray-800'></div>
                         </div>
                       ))
-                    : // 显示真实数据
-                      hotMovies.map((movie, index) => (
+                    : hotMovies.map((movie, index) => (
                         <div
                           key={index}
                           className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
@@ -271,8 +249,7 @@ function HomeClient() {
                 </div>
                 <ScrollableRow>
                   {loading
-                    ? // 加载状态显示灰色占位数据
-                      Array.from({ length: 8 }).map((_, index) => (
+                    ? Array.from({ length: 8 }).map((_, index) => (
                         <div
                           key={index}
                           className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'
@@ -283,8 +260,7 @@ function HomeClient() {
                           <div className='mt-2 h-4 bg-gray-200 rounded animate-pulse dark:bg-gray-800'></div>
                         </div>
                       ))
-                    : // 显示真实数据
-                      hotTvShows.map((show, index) => (
+                    : hotTvShows.map((show, index) => (
                         <div
                           key={index}
                           className='min-w-[96px] w-24 sm:min-w-[180px] sm:w-44'

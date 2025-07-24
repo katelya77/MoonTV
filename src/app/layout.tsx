@@ -1,21 +1,20 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
+import { Fira_Sans } from 'next/font/google';
 
 import './globals.css';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 import { getConfig } from '@/lib/config';
-
 import { SiteProvider } from '../components/SiteProvider';
 import { ThemeProvider } from '../components/ThemeProvider';
 
-const inter = Inter({ subsets: ['latin'] });
+const firaSans = Fira_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] });
 
 export async function generateMetadata(): Promise<Metadata> {
-  let siteName = process.env.SITE_NAME || 'MoonTV';
+  let siteName = 'KatelyaTV'; // 直接写死站点名
   if (process.env.NEXT_PUBLIC_STORAGE_TYPE !== 'd1') {
     const config = await getConfig();
-    siteName = config.SiteConfig.SiteName;
+    siteName = config.SiteConfig.SiteName || 'KatelyaTV';
   }
 
   return {
@@ -34,7 +33,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  let siteName = process.env.SITE_NAME || 'MoonTV';
+  const siteName = 'KatelyaTV';
   let announcement =
     process.env.ANNOUNCEMENT ||
     '本网站仅提供影视信息搜索服务，所有内容均来自第三方网站。本站不存储任何视频资源，不对任何内容的准确性、合法性、完整性负责。';
@@ -42,7 +41,6 @@ export default async function RootLayout({
   let imageProxy = process.env.NEXT_PUBLIC_IMAGE_PROXY || '';
   if (process.env.NEXT_PUBLIC_STORAGE_TYPE !== 'd1') {
     const config = await getConfig();
-    siteName = config.SiteConfig.SiteName;
     announcement = config.SiteConfig.Announcement;
     enableRegister = config.UserConfig.AllowRegister;
     imageProxy = config.SiteConfig.ImageProxy;
@@ -64,13 +62,7 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${inter.className} min-h-screen text-gray-900 dark:text-gray-200`}
-        style={{
-          backgroundImage: "url('/bg.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-        }}
+        className={`${firaSans.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid`}
       >
         <ThemeProvider
           attribute='class'
@@ -78,6 +70,13 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          {/* 站点名展示 Logo */}
+          <header className="py-6 text-center">
+            <h1 className="text-4xl sm:text-5xl gradient-text tracking-wide drop-shadow-md">
+              KatelyaTV
+            </h1>
+          </header>
+
           <SiteProvider siteName={siteName} announcement={announcement}>
             {children}
           </SiteProvider>

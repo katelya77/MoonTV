@@ -21,8 +21,7 @@ html,
 body {
   height: 100%;
   overflow-x: hidden;
-  /* 阻止 iOS Safari 拉动回弹 */
-  overscroll-behavior: none;
+  overscroll-behavior: none; /* 防止 iOS Safari 拉动回弹 */
 }
 
 body {
@@ -47,16 +46,13 @@ html:not(.dark) body {
   width: 8px;
   height: 8px;
 }
-
 ::-webkit-scrollbar-track {
   background: rgba(31, 41, 55, 0.1);
 }
-
 ::-webkit-scrollbar-thumb {
   background: rgba(75, 85, 99, 0.3);
   border-radius: 4px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(107, 114, 128, 0.5);
 }
@@ -65,7 +61,6 @@ html:not(.dark) body {
 .video-card-hover {
   transition: transform 0.3s ease;
 }
-
 .video-card-hover:hover {
   transform: scale(1.05);
 }
@@ -79,26 +74,11 @@ html:not(.dark) body {
   );
 }
 
-/* 隐藏移动端（<768px）垂直滚动条 */
-@media (max-width: 767px) {
-  html,
-  body {
-    -ms-overflow-style: none; /* IE & Edge */
-    scrollbar-width: none; /* Firefox */
-  }
-
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar {
-    display: none; /* Chrome Safari */
-  }
-}
-
 /* 隐藏所有滚动条（兼容 WebKit、Firefox、IE/Edge） */
 * {
   -ms-overflow-style: none; /* IE & Edge */
   scrollbar-width: none; /* Firefox */
 }
-
 *::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
@@ -112,7 +92,6 @@ html:not(.dark) body {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
-
 @keyframes slide-from-bottom {
   from {
     clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
@@ -121,28 +100,18 @@ html:not(.dark) body {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
-
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.8s;
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   animation-fill-mode: both;
 }
-
-/*
-  切换时，旧的视图不应该有动画，它应该在下面，等待被新的视图覆盖。
-  这可以防止在动画完成前，页面底部提前变色。
-*/
 ::view-transition-old(root) {
   animation: none;
 }
-
-/* 从浅色到深色：新内容（深色）从顶部滑入 */
 html.dark::view-transition-new(root) {
   animation-name: slide-from-top;
 }
-
-/* 从深色到浅色：新内容（浅色）从底部滑入 */
 html:not(.dark)::view-transition-new(root) {
   animation-name: slide-from-bottom;
 }
@@ -154,23 +123,41 @@ div[data-media-provider] video {
 }
 
 .art-poster {
-  background-size: contain !important; /* 使图片完整展示 */
-  background-position: center center !important; /* 居中显示 */
-  background-repeat: no-repeat !important; /* 防止重复 */
-  background-color: #000 !important; /* 其余区域填充为黑色 */
+  background-size: contain !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-color: #000 !important;
 }
 
-/* 隐藏移动端竖屏时的 pip 按钮 */
+/* 隐藏移动端竖屏时的 pip/全屏/音量按钮 */
 @media (max-width: 768px) {
-  .art-control-pip {
-    display: none !important;
-  }
-
-  .art-control-fullscreenWeb {
-    display: none !important;
-  }
-
+  .art-control-pip,
+  .art-control-fullscreenWeb,
   .art-control-volume {
     display: none !important;
   }
+}
+
+/* 渐变文字 */
+.gradient-text {
+  background: linear-gradient(to right, #a855f7, #ec4899, #f97316);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* 网格背景（明亮 & 暗色兼容） */
+.bg-grid {
+  background-color: #f9fafb;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.dark .bg-grid {
+  background-color: #111827;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
 }

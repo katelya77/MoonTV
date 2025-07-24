@@ -11,7 +11,6 @@ import { ThemeProvider } from '../components/ThemeProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
-// 动态生成 metadata，支持配置更新后的标题变化
 export async function generateMetadata(): Promise<Metadata> {
   let siteName = process.env.SITE_NAME || 'MoonTV';
   if (process.env.NEXT_PUBLIC_STORAGE_TYPE !== 'd1') {
@@ -49,7 +48,6 @@ export default async function RootLayout({
     imageProxy = config.SiteConfig.ImageProxy;
   }
 
-  // 将运行时配置注入到全局 window 对象，供客户端在运行时读取
   const runtimeConfig = {
     STORAGE_TYPE: process.env.NEXT_PUBLIC_STORAGE_TYPE || 'localstorage',
     ENABLE_REGISTER: enableRegister,
@@ -59,8 +57,6 @@ export default async function RootLayout({
   return (
     <html lang='zh-CN' suppressHydrationWarning>
       <head>
-        {/* 将配置序列化后直接写入脚本，浏览器端可通过 window.RUNTIME_CONFIG 获取 */}
-        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
         <script
           dangerouslySetInnerHTML={{
             __html: `window.RUNTIME_CONFIG = ${JSON.stringify(runtimeConfig)};`,
@@ -68,7 +64,13 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${inter.className} min-h-screen bg-white text-gray-900 dark:bg-black dark:text-gray-200`}
+        className={`${inter.className} min-h-screen text-gray-900 dark:text-gray-200`}
+        style={{
+          backgroundImage: "url('/bg.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
       >
         <ThemeProvider
           attribute='class'

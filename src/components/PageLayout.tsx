@@ -93,9 +93,9 @@ const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
         </div>
       </header>
 
-{/* ✅ 主内容区（宽度增强 + 16:9 比例） */}
+{/* ✅ 主内容区（宽度增强 + 19:6 比例） */}
 <main className="relative max-w-6xl mx-auto w-full px-4 md:px-8 pt-20 pb-[calc(3.5rem+env(safe-area-inset-bottom))] min-h-screen">
-  <div className="rounded-xl bg-white/60 dark:bg-gray-800/50 backdrop-blur-lg shadow-lg p-4 md:p-6 animate-fade-in aspect-video">
+  <div className="rounded-xl bg-white/60 dark:bg-gray-800/50 backdrop-blur-lg shadow-lg p-4 md:p-6 animate-fade-in aspect-[19/6]">
     {children}
   </div>
 </main>

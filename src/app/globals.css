@@ -23,7 +23,7 @@
 @keyframes fade-in {
   0% {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
@@ -147,109 +147,168 @@ div[data-media-provider] video {
   }
 }
 
-/* 🌈 渐变文字（更强烈，动感） */
+/* 🌈 增强渐变文字动画 */
 .gradient-text {
-  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ffcc, #ffcc00);
-  background-size: 300% 300%;
+  background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b);
+  background-size: 400% 400%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shine 6s ease-in-out infinite;
-  font-weight: 800;
-  font-size: 2.5rem;
+  animation: rainbow-shift 8s ease-in-out infinite;
+  font-weight: 900;
+  font-size: 3rem;
   text-align: center;
+  letter-spacing: -0.02em;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
 }
 
-@keyframes shine {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+@keyframes rainbow-shift {
+  0%, 100% { background-position: 0% 50%; }
+  25% { background-position: 100% 50%; }
+  50% { background-position: 50% 100%; }
+  75% { background-position: 50% 0%; }
 }
 
-/* ✅ 网格背景改进（间距加大 & 白天模式清晰） */
+/* ✅ 网格背景改进 */
 .bg-grid {
-  background-color: #f9fafb;
+  background-color: #fafbfc;
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
 .dark .bg-grid {
-  background-color: #111827;
+  background-color: #0f1419;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
-@layer utilities {
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* 🎨 炫酷动画效果 */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) rotate(1deg); }
+  66% { transform: translateY(5px) rotate(-1deg); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+    opacity: 0.8;
   }
-  .animate-fade-in {
-    animation: fade-in 0.6s ease-out;
+  50% { 
+    box-shadow: 0 0 40px rgba(34, 197, 94, 0.6);
+    opacity: 1;
   }
 }
 
-/* 背景网格改良 */
-.bg-grid-gray-300\/40 {
-  background-image: linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-.dark .bg-grid-gray-700\/40 {
-  background-image: linear-gradient(to right, rgba(255,255,255,0.08) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255,255,255,0.08) 1px, transparent 1px);
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
-/* ===== 修复主窗口高度问题 ===== */
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-spin-slow { animation: spin-slow 20s linear infinite; }
+.animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
+.animate-shimmer { animation: shimmer 2s ease-in-out infinite; }
+
+/* 动画延迟 */
+.animation-delay-1000 { animation-delay: 1s; }
+.animation-delay-2000 { animation-delay: 2s; }
+.animation-delay-3000 { animation-delay: 3s; }
+
+/* ===== 高度和布局修复 ===== */
 html, body {
   height: 100%;
   min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
-/* 确保根容器占满屏幕 */
 #__next {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* 主内容区域自动扩展 */
 .main-content {
   flex: 1;
-  min-height: calc(100vh - 64px); /* 减去顶部导航高度 */
+  min-height: 100vh;
+  width: 100%;
 }
 
-/* 页面布局容器 */
 .page-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
-/* 内容区域 */
 .content-area {
   flex: 1;
-  min-height: calc(100vh - 120px); /* 为顶部和底部留出空间 */
-  padding-bottom: 60px; /* 增加底部间距 */
+  min-height: calc(100vh - 80px);
+  padding-bottom: 2rem;
+  width: 100%;
 }
 
-/* 移动端适配 */
+/* 🎯 响应式优化 */
 @media (max-width: 768px) {
-  .main-content {
-    min-height: calc(100vh - 120px); /* 移动端底部导航更高 */
+  .gradient-text {
+    font-size: 2rem;
   }
   
   .content-area {
-    min-height: calc(100vh - 160px);
-    padding-bottom: 80px;
+    min-height: calc(100vh - 120px);
+    padding-bottom: 4rem;
   }
+}
+
+@media (min-width: 1024px) {
+  .gradient-text {
+    font-size: 3.5rem;
+  }
+}
+
+/* 🌟 特殊效果 */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.neon-border {
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5) 1;
+  animation: neon-glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes neon-glow {
+  from {
+    filter: drop-shadow(0 0 5px currentColor);
+  }
+  to {
+    filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 40px currentColor);
+  }
+}
+
+/* 性能优化 */
+* {
+  will-change: auto;
+}
+
+.animate-fade-in,
+.animate-float,
+.animate-spin-slow,
+.animate-glow-pulse {
+  will-change: transform, opacity;
 }

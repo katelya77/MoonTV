@@ -25,7 +25,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#000000',
+  themeColor: '#8b5cf6', // 淡紫色主题色
 };
 
 export default async function RootLayout({
@@ -63,13 +63,11 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${urbanist.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid animate-fade-in page-container`}
+        className={`${urbanist.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid animate-fade-in`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <SiteProvider siteName={siteName} announcement={announcement}>
-            <div className="main-content">
-              {children}
-            </div>
+            {children}
           </SiteProvider>
         </ThemeProvider>
       </body>

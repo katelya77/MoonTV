@@ -23,7 +23,7 @@
 @keyframes fade-in {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(10px);
   }
   100% {
     opacity: 1;
@@ -31,23 +31,23 @@
   }
 }
 
-/* ==== 自定义滚动条 ==== */
+/* ==== 自定义滚动条 (淡紫色主题) ==== */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(31, 41, 55, 0.1);
+  background: rgba(139, 92, 246, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(75, 85, 99, 0.3);
+  background: rgba(139, 92, 246, 0.3);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.5);
+  background: rgba(139, 92, 246, 0.5);
 }
 
 /* 视频卡片悬停效果 */
@@ -147,168 +147,72 @@ div[data-media-provider] video {
   }
 }
 
-/* 🌈 增强渐变文字动画 */
+/* 🌈 渐变文字（淡紫色主题） */
 .gradient-text {
-  background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b);
-  background-size: 400% 400%;
+  background: linear-gradient(90deg, #a855f7, #8b5cf6, #7c3aed, #c084fc);
+  background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: rainbow-shift 8s ease-in-out infinite;
-  font-weight: 900;
-  font-size: 3rem;
+  animation: shine 6s ease-in-out infinite;
+  font-weight: 800;
+  font-size: 2.5rem;
   text-align: center;
-  letter-spacing: -0.02em;
-  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
 }
 
-@keyframes rainbow-shift {
-  0%, 100% { background-position: 0% 50%; }
-  25% { background-position: 100% 50%; }
-  50% { background-position: 50% 100%; }
-  75% { background-position: 50% 0%; }
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* ✅ 网格背景改进 */
+/* ✅ 网格背景改进（淡紫色主题 & 增加高度） */
 .bg-grid {
-  background-color: #fafbfc;
+  background-color: #faf7ff;
   background-image:
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(to right, rgba(139, 92, 246, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+  min-height: 100vh; /* 确保最小高度为视窗高度 */
 }
 
 .dark .bg-grid {
-  background-color: #0f1419;
+  background-color: #1a0d2e;
   background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
+    linear-gradient(to right, rgba(196, 181, 253, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(196, 181, 253, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  min-height: 100vh;
 }
 
-/* 🎨 炫酷动画效果 */
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  33% { transform: translateY(-10px) rotate(1deg); }
-  66% { transform: translateY(5px) rotate(-1deg); }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-@keyframes glow-pulse {
-  0%, 100% { 
-    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-    opacity: 0.8;
+@layer utilities {
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  50% { 
-    box-shadow: 0 0 40px rgba(34, 197, 94, 0.6);
-    opacity: 1;
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out;
   }
 }
 
-@keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* 背景网格改良（淡紫色） */
+.bg-grid-gray-300\/40 {
+  background-image: linear-gradient(to right, rgba(139, 92, 246, 0.08) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(139, 92, 246, 0.08) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+.dark .bg-grid-gray-700\/40 {
+  background-image: linear-gradient(to right, rgba(196, 181, 253, 0.12) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(196, 181, 253, 0.12) 1px, transparent 1px);
 }
 
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-spin-slow { animation: spin-slow 20s linear infinite; }
-.animate-glow-pulse { animation: glow-pulse 3s ease-in-out infinite; }
-.animate-shimmer { animation: shimmer 2s ease-in-out infinite; }
-
-/* 动画延迟 */
-.animation-delay-1000 { animation-delay: 1s; }
-.animation-delay-2000 { animation-delay: 2s; }
-.animation-delay-3000 { animation-delay: 3s; }
-
-/* ===== 高度和布局修复 ===== */
-html, body {
-  height: 100%;
-  min-height: 100vh;
-  scroll-behavior: smooth;
-}
-
-#__next {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
+/* 增加内容容器的最小高度 */
 .main-content {
-  flex: 1;
-  min-height: 100vh;
-  width: 100%;
-}
-
-.page-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.content-area {
-  flex: 1;
-  min-height: calc(100vh - 80px);
-  padding-bottom: 2rem;
-  width: 100%;
-}
-
-/* 🎯 响应式优化 */
-@media (max-width: 768px) {
-  .gradient-text {
-    font-size: 2rem;
-  }
-  
-  .content-area {
-    min-height: calc(100vh - 120px);
-    padding-bottom: 4rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .gradient-text {
-    font-size: 3.5rem;
-  }
-}
-
-/* 🌟 特殊效果 */
-.glass-effect {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.dark .glass-effect {
-  background: rgba(0, 0, 0, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.neon-border {
-  border: 2px solid;
-  border-image: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5) 1;
-  animation: neon-glow 3s ease-in-out infinite alternate;
-}
-
-@keyframes neon-glow {
-  from {
-    filter: drop-shadow(0 0 5px currentColor);
-  }
-  to {
-    filter: drop-shadow(0 0 20px currentColor) drop-shadow(0 0 40px currentColor);
-  }
-}
-
-/* 性能优化 */
-* {
-  will-change: auto;
-}
-
-.animate-fade-in,
-.animate-float,
-.animate-spin-slow,
-.animate-glow-pulse {
-  will-change: transform, opacity;
+  min-height: calc(100vh - 4rem); /* 减去头部高度 */
+  padding-bottom: 2rem; /* 底部间距 */
 }

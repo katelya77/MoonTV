@@ -30,7 +30,7 @@ const Logo = () => {
       href="/"
       className="flex items-center justify-center h-16 select-none hover:opacity-80 transition-opacity duration-200"
     >
-      <span className="text-2xl font-bold text-green-600 tracking-tight">{siteName}</span>
+      <span className="text-2xl font-bold text-purple-600 dark:text-purple-400 tracking-tight">{siteName}</span>
     </Link>
   );
 };
@@ -116,7 +116,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
           href="/"
           onClick={() => setActive('/')}
           data-active={active === '/'}
-          className="flex items-center gap-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-200/40 dark:hover:bg-gray-700/30 data-[active=true]:text-green-600"
+          className="flex items-center gap-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-100/50 dark:hover:bg-purple-900/30 data-[active=true]:text-purple-600 dark:data-[active=true]:text-purple-400"
         >
           <Home className="h-4 w-4" />
           <span>首页</span>
@@ -130,7 +130,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
             setActive('/search');
           }}
           data-active={active === '/search'}
-          className="flex items-center gap-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-200/40 dark:hover:bg-gray-700/30 data-[active=true]:text-green-600"
+          className="flex items-center gap-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-100/50 dark:hover:bg-purple-900/30 data-[active=true]:text-purple-600 dark:data-[active=true]:text-purple-400"
         >
           <Search className="h-4 w-4" />
           <span>搜索</span>
@@ -145,7 +145,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
               href={item.href}
               onClick={() => setActive(item.href)}
               data-active={isActive}
-              className="flex items-center gap-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 hover:bg-gray-200/40 dark:hover:bg-gray-700/30 data-[active=true]:text-green-600"
+              className="flex items-center gap-2 px-3 py-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 hover:bg-purple-100/50 dark:hover:bg-purple-900/30 data-[active=true]:text-purple-600 dark:data-[active=true]:text-purple-400"
             >
               <Icon className="h-4 w-4" />
               <span>{item.label}</span>
@@ -162,7 +162,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
       <div className="hidden md:flex">
         <aside
           data-sidebar
-          className={`fixed top-0 left-0 h-screen bg-white/40 backdrop-blur-xl transition-all duration-300 border-r border-gray-200/50 z-10 shadow-lg dark:bg-gray-900/70 dark:border-gray-700/50 ${
+          className={`fixed top-0 left-0 h-screen bg-purple-50/60 backdrop-blur-xl transition-all duration-300 border-r border-purple-200/50 z-10 shadow-lg dark:bg-purple-950/70 dark:border-purple-700/50 ${
             isCollapsed ? 'w-16' : 'w-64'
           }`}
           style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
@@ -179,7 +179,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
               </div>
               <button
                 onClick={handleToggle}
-                className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100/50 dark:hover:bg-gray-700/50 ${
+                className={`absolute top-1/2 -translate-y-1/2 w-8 h-8 rounded-lg text-purple-500 hover:bg-purple-100/50 dark:hover:bg-purple-800/50 ${
                   isCollapsed ? 'left-1/2 -translate-x-1/2' : 'right-2'
                 }`}
               >
@@ -193,7 +193,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
                 href="/"
                 onClick={() => setActive('/')}
                 data-active={active === '/'}
-                className="group flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100/30 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-400"
+                className="group flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-purple-100/40 hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400 dark:hover:bg-purple-900/30 data-[active=true]:bg-purple-100/60 data-[active=true]:text-purple-600 dark:data-[active=true]:bg-purple-900/50 dark:data-[active=true]:text-purple-400"
               >
                 <Home className="h-4 w-4" /> {!isCollapsed && <span>首页</span>}
               </Link>
@@ -205,7 +205,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
                   setActive('/search');
                 }}
                 data-active={active === '/search'}
-                className="group flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-100/30 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-400"
+                className="group flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-purple-100/40 hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400 dark:hover:bg-purple-900/30 data-[active=true]:bg-purple-100/60 data-[active=true]:text-purple-600 dark:data-[active=true]:bg-purple-900/50 dark:data-[active=true]:text-purple-400"
               >
                 <Search className="h-4 w-4" /> {!isCollapsed && <span>搜索</span>}
               </Link>
@@ -222,7 +222,7 @@ const Sidebar = ({ onToggle, activePath = '/', horizontal = false }: SidebarProp
                     href={item.href}
                     onClick={() => setActive(item.href)}
                     data-active={isActive}
-                    className="group flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-gray-700 hover:bg-gray-100/30 hover:text-green-600 dark:text-gray-300 dark:hover:text-green-400"
+                    className="group flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-gray-700 hover:bg-purple-100/40 hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400 dark:hover:bg-purple-900/30 data-[active=true]:bg-purple-100/60 data-[active=true]:text-purple-600 dark:data-[active=true]:bg-purple-900/50 dark:data-[active=true]:text-purple-400"
                   >
                     <Icon className="h-4 w-4" /> {!isCollapsed && <span>{item.label}</span>}
                   </Link>

@@ -1,61 +1,98 @@
+'use client';
+
+import { useEffect, useRef } from 'react';
 import { BackButton } from './BackButton';
 import { LogoutButton } from './LogoutButton';
 import MobileBottomNav from './MobileBottomNav';
 import MobileHeader from './MobileHeader';
 import { SettingsButton } from './SettingsButton';
-import Sidebar from './Sidebar';
 import { ThemeToggle } from './ThemeToggle';
+import Sidebar from './Sidebar'; // 复用 Sidebar 组件里的菜单项
 
 interface PageLayoutProps {
   children: React.ReactNode;
   activePath?: string;
 }
 
-// 桌面端右上角工具栏组件
-const DesktopTopBar = () => (
-  <div className="absolute top-2 right-4 z-20 hidden md:flex items-center gap-2">
-    <SettingsButton />
-    <LogoutButton />
-    <ThemeToggle />
-  </div>
-);
+/* ✅ 粒子背景组件 */
+const ParticleBackground = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+    let w = (canvas.width = window.innerWidth);
+    let h = (canvas.height = window.innerHeight);
+
+    const particles = Array.from({ length: 60 }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      r: Math.random() * 2 + 1,
+      dx: (Math.random() - 0.5) * 0.5,
+      dy: (Math.random() - 0.5) * 0.5,
+    }));
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = 'rgba(255,255,255,0.15)';
+      particles.forEach((p) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if (p.x < 0 || p.x > w) p.dx *= -1;
+        if (p.y < 0 || p.y > h) p.dy *= -1;
+      });
+      requestAnimationFrame(draw);
+    };
+    draw();
+
+    const resize = () => {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    };
+    window.addEventListener('resize', resize);
+    return () => window.removeEventListener('resize', resize);
+  }, []);
+
+  return <canvas ref={canvasRef} className="fixed inset-0 -z-10" />;
+};
 
 const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
-  // 需要显示返回按钮的路由
   const showBackButton = ['/play'].includes(activePath);
 
   return (
-    <div className="w-full min-h-screen">
-      {/* 移动端头部 */}
+    <div className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100">
+      
+      {/* 🌌 动态粒子背景 */}
+      <ParticleBackground />
+
+      {/* 📱 移动端头部 */}
       <MobileHeader showBackButton={showBackButton} />
 
-      {/* 主要布局容器 */}
-      <div className="flex md:grid md:grid-cols-[auto_1fr] w-full min-h-screen md:min-h-auto">
-        {/* 侧边栏 - 仅桌面端显示 */}
-        <div className="hidden md:block">
-          <Sidebar activePath={activePath} />
+      {/* 💻 顶部导航（桌面端） */}
+      <header className="hidden md:flex fixed top-0 left-0 w-full z-30 backdrop-blur-md bg-white/60 dark:bg-gray-900/40 shadow-md border-b border-gray-300 dark:border-gray-700 px-6 py-3 justify-between items-center">
+        {/* 复用 Sidebar 菜单 */}
+        <div className="flex gap-6">
+          <Sidebar activePath={activePath} horizontal />
         </div>
-
-        {/* 主内容区域 */}
-        <div className="relative min-w-0 flex-1 transition-all duration-300">
-          {/* 桌面端左上角返回按钮 */}
-          {showBackButton && (
-            <div className="absolute top-3 left-1 z-20 hidden md:flex">
-              <BackButton />
-            </div>
-          )}
-
-          {/* 桌面端右上角工具栏 */}
-          <DesktopTopBar />
-
-          {/* 主内容 */}
-          <main className="flex-1 md:min-h-0 mb-14 md:mb-0 pb-[calc(3.5rem+env(safe-area-inset-bottom))]">
-            {children}
-          </main>
+        <div className="flex items-center gap-3">
+          {showBackButton && <BackButton />}
+          <SettingsButton />
+          <LogoutButton />
+          <ThemeToggle />
         </div>
-      </div>
+      </header>
 
-      {/* 移动端底部导航 */}
+      {/* 主内容区 */}
+      <main className="relative max-w-5xl mx-auto w-full px-4 md:px-8 pt-20 pb-[calc(3.5rem+env(safe-area-inset-bottom))] min-h-screen">
+        <div className="rounded-xl bg-white/60 dark:bg-gray-800/50 backdrop-blur-lg shadow-lg p-4 md:p-6 animate-fade-in">
+          {children}
+        </div>
+      </main>
+
+      {/* 📱 移动端底部导航 */}
       <div className="md:hidden">
         <MobileBottomNav activePath={activePath} />
       </div>

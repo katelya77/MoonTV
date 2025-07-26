@@ -58,12 +58,12 @@ export default async function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: window.RUNTIME_CONFIG = ${JSON.stringify(runtimeConfig)};,
+            __html: `window.RUNTIME_CONFIG = ${JSON.stringify(runtimeConfig)};`,
           }}
         />
       </head>
       <body
-        className={${urbanist.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid animate-fade-in}
+        className={`${urbanist.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid animate-fade-in`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <SiteProvider siteName={siteName} announcement={announcement}>

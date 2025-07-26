@@ -7,7 +7,7 @@ import MobileBottomNav from './MobileBottomNav';
 import MobileHeader from './MobileHeader';
 import { SettingsButton } from './SettingsButton';
 import { ThemeToggle } from './ThemeToggle';
-import Sidebar from './Sidebar'; // 复用 Sidebar 组件里的菜单项
+import Sidebar from './Sidebar';
 
 interface PageLayoutProps {
   children: React.ReactNode;
@@ -59,21 +59,29 @@ const ParticleBackground = () => {
   return <canvas ref={canvasRef} className="fixed inset-0 -z-10" />;
 };
 
+/* ✅ Vercel 风格流动光晕 */
+const GlowBackground = () => (
+  <div className="absolute inset-0 -z-20">
+    <div className="absolute w-[600px] h-[600px] bg-green-400/30 rounded-full blur-3xl animate-pulse top-[-200px] left-[-200px]" />
+    <div className="absolute w-[500px] h-[500px] bg-purple-400/30 rounded-full blur-3xl animate-ping bottom-[-150px] right-[-150px]" />
+  </div>
+);
+
 const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
   const showBackButton = ['/play'].includes(activePath);
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-900 dark:to-gray-800 text-gray-900 dark:text-gray-100">
       
-      {/* 🌌 动态粒子背景 */}
+      {/* 🌌 背景层 */}
+      <GlowBackground />
       <ParticleBackground />
 
       {/* 📱 移动端头部 */}
       <MobileHeader showBackButton={showBackButton} />
 
-      {/* 💻 顶部导航（桌面端） */}
+      {/* 💻 桌面导航 */}
       <header className="hidden md:flex fixed top-0 left-0 w-full z-30 backdrop-blur-md bg-white/60 dark:bg-gray-900/40 shadow-md border-b border-gray-300 dark:border-gray-700 px-6 py-3 justify-between items-center">
-        {/* 复用 Sidebar 菜单 */}
         <div className="flex gap-6">
           <Sidebar activePath={activePath} horizontal />
         </div>
@@ -85,8 +93,8 @@ const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
         </div>
       </header>
 
-      {/* 主内容区 */}
-      <main className="relative max-w-5xl mx-auto w-full px-4 md:px-8 pt-20 pb-[calc(3.5rem+env(safe-area-inset-bottom))] min-h-screen">
+      {/* ✅ 主内容区（宽度增强） */}
+      <main className="relative max-w-6xl mx-auto w-full px-4 md:px-8 pt-20 pb-[calc(3.5rem+env(safe-area-inset-bottom))] min-h-screen">
         <div className="rounded-xl bg-white/60 dark:bg-gray-800/50 backdrop-blur-lg shadow-lg p-4 md:p-6 animate-fade-in">
           {children}
         </div>

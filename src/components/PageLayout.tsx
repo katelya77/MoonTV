@@ -93,14 +93,12 @@ const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
         </div>
       </header>
 
-{/* ✅ 主内容区（宽度增强 + 自适应高度） */}
-<main className="relative max-w-6xl mx-auto w-full px-4 md:px-8 pt-20 pb-[calc(3.5rem+env(safe-area-inset-bottom))] min-h-screen">
-  <div className="rounded-xl bg-white/60 dark:bg-gray-800/50 backdrop-blur-lg shadow-lg p-4 md:p-6 animate-fade-in max-h-[80vh] overflow-auto">
-    {children}
-  </div>
-</main>
-
-
+  {/* ✅ 主内容区 */}
+  <main className="relative max-w-6xl mx-auto w-full px-4 md:px-8 pt-20 pb-[calc(3.5rem+env(safe-area-inset-bottom))] min-h-screen">
+    <div className="rounded-xl bg-white/60 dark:bg-gray-800/50 backdrop-blur-lg shadow-lg p-4 md:p-6 animate-fade-in">
+      {children}
+    </div>
+  </main>
 
       {/* 📱 移动端底部导航 */}
       <div className="md:hidden">

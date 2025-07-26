@@ -63,11 +63,13 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${urbanist.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid animate-fade-in`}
+        className={`${urbanist.className} min-h-screen text-gray-900 dark:text-gray-200 bg-grid animate-fade-in page-container`}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <SiteProvider siteName={siteName} announcement={announcement}>
-            {children}
+            <div className="main-content">
+              {children}
+            </div>
           </SiteProvider>
         </ThemeProvider>
       </body>

@@ -126,7 +126,7 @@ function HomeClient() {
 
   return (
     <PageLayout>
-      <div className='px-2 sm:px-10 py-4 sm:py-8 overflow-visible'>
+      <div className='content-area px-2 sm:px-10 py-4 sm:py-8 overflow-visible'>
         {/* 顶部 Tab 切换 */}
         <div className='mb-8 flex justify-center'>
           <CapsuleSwitch
@@ -148,8 +148,8 @@ function HomeClient() {
 
         <div className='max-w-[95%] mx-auto'>
           {activeTab === 'favorites' ? (
-            <section className='mb-8'>
-              <div className='mb-4 flex items-center justify-between'>
+            <section className='mb-12'>
+              <div className='mb-6 flex items-center justify-between'>
                 <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
                   我的收藏
                 </h2>
@@ -177,8 +177,10 @@ function HomeClient() {
                   </div>
                 ))}
                 {favoriteItems.length === 0 && (
-                  <div className='col-span-full text-center text-gray-500 py-8 dark:text-gray-400'>
-                    暂无收藏内容
+                  <div className='col-span-full text-center text-gray-500 py-16 dark:text-gray-400'>
+                    <div className='text-6xl mb-4'>📺</div>
+                    <p className='text-lg'>暂无收藏内容</p>
+                    <p className='text-sm mt-2'>快去发现喜欢的影视作品吧！</p>
                   </div>
                 )}
               </div>
@@ -188,8 +190,8 @@ function HomeClient() {
               <ContinueWatching />
 
               {/* 热门电影 */}
-              <section className='mb-8'>
-                <div className='mb-4 flex items-center justify-between'>
+              <section className='mb-12'>
+                <div className='mb-6 flex items-center justify-between'>
                   <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
                     热门电影
                   </h2>
@@ -234,8 +236,8 @@ function HomeClient() {
               </section>
 
               {/* 热门剧集 */}
-              <section className='mb-8'>
-                <div className='mb-4 flex items-center justify-between'>
+              <section className='mb-12'>
+                <div className='mb-6 flex items-center justify-between'>
                   <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
                     热门剧集
                   </h2>
@@ -276,6 +278,25 @@ function HomeClient() {
                         </div>
                       ))}
                 </ScrollableRow>
+              </section>
+
+              {/* 添加更多内容区域来增加页面高度 */}
+              <section className='mb-12'>
+                <div className='text-center py-16'>
+                  <div className='text-6xl mb-4'>🎬</div>
+                  <h3 className='text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4'>
+                    发现更多精彩内容
+                  </h3>
+                  <p className='text-gray-600 dark:text-gray-400 mb-8'>
+                    使用搜索功能探索海量影视资源，收藏你喜欢的内容
+                  </p>
+                  <Link
+                    href='/search'
+                    className='inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors'
+                  >
+                    开始搜索
+                  </Link>
+                </div>
               </section>
             </>
           )}

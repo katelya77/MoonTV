@@ -464,11 +464,12 @@ body::after {
   );
 }
 
-/* 优化的圆角容器样式 - 主内容区 - 修改为新布局适配 */
+/* 优化的圆角容器样式 - 主内容区 - 修改透明度为50% */
 .rounded-container {
   border-radius: 20px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.85);
+  /* 将透明度从0.85调整为0.5 (50%) */
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(25px);
   border: 1px solid rgba(147, 112, 219, 0.2);
   box-shadow: 
@@ -505,7 +506,8 @@ body::after {
 }
 
 .dark .rounded-container {
-  background: rgba(0, 0, 0, 0.85);
+  /* 暗色模式下也将透明度调整为0.5 (50%) */
+  background: rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(147, 112, 219, 0.3);
   box-shadow: 
     0 8px 40px rgba(147, 112, 219, 0.25),

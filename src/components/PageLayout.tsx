@@ -183,9 +183,9 @@ const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
             </div>
           )}
 
-          {/* 主内容容器 - 优化布局和间距，左右各留白20% */}
+          {/* 主内容容器 - 修改布局：左右各留白1/6，主内容区占2/3，实现完全居中 */}
           <main className='flex-1 md:min-h-0 mb-14 md:mb-0 md:p-6 lg:p-8'>
-            <div className='rounded-container min-h-screen md:min-h-[calc(100vh-10rem)] w-full md:max-w-[60%] mx-auto'>
+            <div className='rounded-container min-h-screen md:min-h-[calc(100vh-10rem)] w-full md:max-w-[66.67%] mx-auto'>
               <div 
                 className='p-4 md:p-8 lg:p-10'
                 style={{

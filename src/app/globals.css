@@ -69,6 +69,280 @@
   }
 }
 
+/* 主内容区大型 KatelyaTV Logo 容器 */
+.main-logo-container {
+  padding: 3rem 0 4rem 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+/* 背景光效 */
+.logo-background-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(
+    ellipse,
+    rgba(147, 112, 219, 0.15) 0%,
+    rgba(255, 107, 107, 0.1) 30%,
+    rgba(76, 205, 196, 0.08) 60%,
+    transparent 100%
+  );
+  animation: glow-pulse 4s ease-in-out infinite, glow-rotate 20s linear infinite;
+  border-radius: 50%;
+  z-index: 0;
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@keyframes glow-rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* 主内容区大型 Logo */
+.main-katelya-logo {
+  font-size: 4rem;
+  font-weight: 900;
+  background: linear-gradient(
+    45deg,
+    #ff6b6b,
+    #4ecdc4,
+    #45b7d1,
+    #96ceb4,
+    #ffc645,
+    #fd79a8,
+    #6c5ce7,
+    #a29bfe,
+    #ff6b6b
+  );
+  background-size: 600% 600%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rainbow-flow-main 6s ease-in-out infinite, logo-float 3s ease-in-out infinite, logo-glow-main 4s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.02em;
+  text-shadow: 0 10px 30px rgba(147, 112, 219, 0.3);
+  cursor: default;
+  user-select: none;
+}
+
+@keyframes rainbow-flow-main {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes logo-float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-8px) scale(1.02);
+  }
+}
+
+@keyframes logo-glow-main {
+  0%, 100% {
+    filter: drop-shadow(0 0 20px rgba(147, 112, 219, 0.4)) drop-shadow(0 0 40px rgba(255, 107, 107, 0.2));
+  }
+  33% {
+    filter: drop-shadow(0 0 30px rgba(76, 205, 196, 0.4)) drop-shadow(0 0 50px rgba(69, 183, 209, 0.3));
+  }
+  66% {
+    filter: drop-shadow(0 0 25px rgba(255, 198, 69, 0.4)) drop-shadow(0 0 45px rgba(253, 121, 168, 0.3));
+  }
+}
+
+/* 主 Logo 副标题 */
+.main-logo-subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: rgba(147, 112, 219, 0.8);
+  animation: subtitle-shimmer 5s ease-in-out infinite;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0.1em;
+}
+
+.dark .main-logo-subtitle {
+  color: rgba(186, 85, 211, 0.9);
+}
+
+@keyframes subtitle-shimmer {
+  0%, 100% {
+    opacity: 0.7;
+    transform: translateY(0px);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+/* Logo 装饰性粒子效果 */
+.logo-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: particle-float 8s linear infinite;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 15%;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(45deg, #ff6b6b, #fd79a8);
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  top: 70%;
+  right: 20%;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(45deg, #4ecdc4, #45b7d1);
+  animation-delay: -2s;
+}
+
+.particle-3 {
+  bottom: 30%;
+  left: 25%;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(45deg, #96ceb4, #ffc645);
+  animation-delay: -4s;
+}
+
+.particle-4 {
+  top: 40%;
+  right: 30%;
+  width: 5px;
+  height: 5px;
+  background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+  animation-delay: -1s;
+}
+
+.particle-5 {
+  top: 60%;
+  left: 10%;
+  width: 7px;
+  height: 7px;
+  background: linear-gradient(45deg, #fd79a8, #ffc645);
+  animation-delay: -3s;
+}
+
+.particle-6 {
+  bottom: 15%;
+  right: 15%;
+  width: 9px;
+  height: 9px;
+  background: linear-gradient(45deg, #a29bfe, #ff6b6b);
+  animation-delay: -5s;
+}
+
+@keyframes particle-float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px) rotate(90deg);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-10px) translateX(-15px) rotate(180deg);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translateY(-25px) translateX(5px) rotate(270deg);
+    opacity: 0.9;
+  }
+}
+
+/* 移动端主内容区 Logo 适配 */
+@media (max-width: 768px) {
+  .main-logo-container {
+    padding: 2rem 0 3rem 0;
+    margin-bottom: 1.5rem;
+  }
+  
+  .main-katelya-logo {
+    font-size: 2.5rem;
+  }
+  
+  .main-logo-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .logo-background-glow {
+    width: 400px;
+    height: 250px;
+  }
+  
+  .particle {
+    transform: scale(0.8);
+  }
+}
+
+@media (max-width: 480px) {
+  .main-katelya-logo {
+    font-size: 2rem;
+  }
+  
+  .main-logo-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .logo-background-glow {
+    width: 300px;
+    height: 200px;
+  }
+}
+
 /* 底部 KatelyaTV Logo 容器 */
 .bottom-logo-container {
   padding: 2rem 0;

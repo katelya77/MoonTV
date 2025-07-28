@@ -1,7 +1,12 @@
+import { Clover, Film, Home, Search, Tv } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback, useEffect, useState } from 'react';
+
 import { BackButton } from './BackButton';
 import MobileBottomNav from './MobileBottomNav';
 import MobileHeader from './MobileHeader';
-import Sidebar from './Sidebar';
+import { useSite } from './SiteProvider';
 import { ThemeToggle } from './ThemeToggle';
 import { UserMenu } from './UserMenu';
 
@@ -10,19 +15,165 @@ interface PageLayoutProps {
   activePath?: string;
 }
 
+// 内联顶部导航栏组件
+const TopNavbar = ({ activePath = '/' }: { activePath?: string }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { siteName } = useSite();
+
+  const [active, setActive] = useState(activePath);
+
+  useEffect(() => {
+    // 优先使用传入的 activePath
+    if (activePath) {
+      setActive(activePath);
+    } else {
+      // 否则使用当前路径
+      const getCurrentFullPath = () => {
+        const queryString = searchParams.toString();
+        return queryString ? `${pathname}?${queryString}` : pathname;
+      };
+      const fullPath = getCurrentFullPath();
+      setActive(fullPath);
+    }
+  }, [activePath, pathname, searchParams]);
+
+  const handleSearchClick = useCallback(() => {
+    router.push('/search');
+  }, [router]);
+
+  const menuItems = [
+    {
+      icon: Home,
+      label: '首页',
+      href: '/',
+    },
+    {
+      icon: Search,
+      label: '搜索',
+      href: '/search',
+    },
+    {
+      icon: Film,
+      label: '电影',
+      href: '/douban?type=movie',
+    },
+    {
+      icon: Tv,
+      label: '剧集',
+      href: '/douban?type=tv',
+    },
+    {
+      icon: Clover,
+      label: '综艺',
+      href: '/douban?type=show',
+    },
+  ];
+
+  return (
+    <nav className='w-full bg-white/40 backdrop-blur-xl border-b border-purple-200/50 shadow-lg dark:bg-gray-900/70 dark:border-purple-700/50 sticky top-0 z-50'>
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        <div className='flex items-center justify-between h-16'>
+          {/* Logo区域 */}
+          <div className='flex-shrink-0'>
+            <Link
+              href='/'
+              className='flex items-center select-none hover:opacity-80 transition-opacity duration-200'
+            >
+              <span className='text-2xl font-bold katelya-logo tracking-tight'>
+                {siteName}
+              </span>
+            </Link>
+          </div>
+
+          {/* 导航菜单 */}
+          <div className='hidden md:block'>
+            <div className='ml-10 flex items-baseline space-x-4'>
+              {menuItems.map((item) => {
+                // 检查当前路径是否匹配这个菜单项
+                const typeMatch = item.href.match(/type=([^&]+)/)?.[1];
+                const tagMatch = item.href.match(/tag=([^&]+)/)?.[1];
+
+                // 解码URL以进行正确的比较
+                const decodedActive = decodeURIComponent(active);
+                const decodedItemHref = decodeURIComponent(item.href);
+
+                const isActive =
+                  decodedActive === decodedItemHref ||
+                  (decodedActive.startsWith('/douban') &&
+                    decodedActive.includes(`type=${typeMatch}`) &&
+                    tagMatch &&
+                    decodedActive.includes(`tag=${tagMatch}`));
+
+                const Icon = item.icon;
+
+                if (item.href === '/search') {
+                  return (
+                    <button
+                      key={item.label}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleSearchClick();
+                        setActive('/search');
+                      }}
+                      data-active={isActive}
+                      className={`group flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                        isActive
+                          ? 'bg-purple-500/20 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400'
+                          : 'text-gray-700 hover:bg-purple-100/30 hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400 dark:hover:bg-purple-500/10'
+                      }`}
+                    >
+                      <Icon className='h-4 w-4 mr-2' />
+                      {item.label}
+                    </button>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setActive(item.href)}
+                    data-active={isActive}
+                    className={`group flex items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200 ${
+                      isActive
+                        ? 'bg-purple-500/20 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400'
+                        : 'text-gray-700 hover:bg-purple-100/30 hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400 dark:hover:bg-purple-500/10'
+                    }`}
+                  >
+                    <Icon className='h-4 w-4 mr-2' />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 右侧按钮 */}
+          <div className='flex items-center gap-2'>
+            <ThemeToggle />
+            <UserMenu />
+          </div>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
 const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
   return (
     <div className='w-full min-h-screen'>
       {/* 移动端头部 */}
       <MobileHeader showBackButton={['/play'].includes(activePath)} />
 
-      {/* 主要布局容器 */}
-      <div className='flex md:grid md:grid-cols-[auto_1fr] w-full min-h-screen md:min-h-auto'>
-        {/* 侧边栏 - 桌面端显示，移动端隐藏 */}
-        <div className='hidden md:block'>
-          <Sidebar activePath={activePath} />
-        </div>
+      {/* 桌面端顶部导航栏 */}
+      <div className='hidden md:block'>
+        <TopNavbar activePath={activePath} />
+      </div>
 
+      {/* 主要布局容器 */}
+      <div className='w-full min-h-screen md:min-h-auto'>
         {/* 主内容区域 */}
         <div className='relative min-w-0 flex-1 transition-all duration-300'>
           {/* 桌面端左上角返回按钮 */}
@@ -32,20 +183,18 @@ const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
             </div>
           )}
 
-          {/* 桌面端顶部按钮 */}
-          <div className='absolute top-2 right-4 z-20 hidden md:flex items-center gap-2'>
-            <ThemeToggle />
-            <UserMenu />
-          </div>
-
-          {/* 主内容 */}
-          <main
-            className='flex-1 md:min-h-0 mb-14 md:mb-0'
-            style={{
-              paddingBottom: 'calc(3.5rem + env(safe-area-inset-bottom))',
-            }}
-          >
-            {children}
+          {/* 主内容容器 - 添加圆角和间距 */}
+          <main className='flex-1 md:min-h-0 mb-14 md:mb-0 md:p-4'>
+            <div className='rounded-container min-h-screen md:min-h-[calc(100vh-8rem)]'>
+              <div 
+                className='p-4 md:p-6'
+                style={{
+                  paddingBottom: 'calc(3.5rem + env(safe-area-inset-bottom))',
+                }}
+              >
+                {children}
+              </div>
+            </div>
           </main>
         </div>
       </div>

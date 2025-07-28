@@ -1,4 +1,93 @@
-@tailwind base;
+/* 加载骨架屏淡紫色主题 */
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+
+/* 页面进入动画 */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* 按钮悬停效果增强 */
+.btn-purple {
+  background: linear-gradient(135deg, #9370db, #ba55d3);
+  transition: all 0.3s ease;
+}
+
+.btn-purple:hover {
+  background: linear-gradient(135deg, #8a2be2, #9370db);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(147, 112, 219, 0.4);
+}
+
+/* 导航项悬停动画 */
+.nav-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #9370db, transparent);
+  transition: left 0.3s ease;
+}
+
+.nav-item:hover::before {
+  left: 0;
+}
+
+/* 卡片悬停增强效果 */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.card-hover::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(147, 112, 219, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.card-hover:hover::after {
+  opacity: 1;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(147, 112, 219, 0.2);
+}@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -27,38 +116,108 @@ body {
 
 body {
   color: rgb(var(--foreground-rgb));
+  position: relative;
 }
 
-html:not(.dark) body {
-  background: linear-gradient(
-    180deg,
-    #e6f3fb 0%,
-    #eaf3f7 18%,
-    #f7f7f3 38%,
-    #e9ecef 60%,
-    #dbe3ea 80%,
-    #d3dde6 100%
-  );
-  background-attachment: fixed;
+/* 动态背景特效 */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(45deg, #e6e6fa, #dda0dd, #c8a2c8, #f0e6ff, #e6e6fa);
+  background-size: 400% 400%;
+  animation: gradientFlow 8s ease infinite;
 }
 
-/* 自定义滚动条样式 */
+/* 流光背景动画 */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 暗色模式背景 */
+html.dark body::before {
+  background: linear-gradient(45deg, #2a0845, #4a0e4e, #1a0a2e, #16213e, #2a0845);
+  background-size: 400% 400%;
+  animation: gradientFlow 8s ease infinite;
+}
+
+/* 浮动装饰元素 */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, rgba(147, 112, 219, 0.4), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(186, 85, 211, 0.3), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(221, 160, 221, 0.4), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(147, 112, 219, 0.3), transparent),
+    radial-gradient(2px 2px at 160px 30px, rgba(138, 43, 226, 0.4), transparent),
+    radial-gradient(1px 1px at 200px 90px, rgba(219, 112, 147, 0.3), transparent),
+    radial-gradient(2px 2px at 250px 50px, rgba(147, 112, 219, 0.4), transparent);
+  background-repeat: repeat;
+  background-size: 300px 200px;
+  animation: sparkle 20s linear infinite, float 15s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(3px);
+  }
+}
+
+/* 自定义滚动条样式 - 淡紫色主题 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(31, 41, 55, 0.1);
+  background: rgba(147, 112, 219, 0.1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(75, 85, 99, 0.3);
+  background: rgba(147, 112, 219, 0.3);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(107, 114, 128, 0.5);
+  background: rgba(147, 112, 219, 0.5);
 }
 
 /* 视频卡片悬停效果 */
@@ -77,6 +236,66 @@ html:not(.dark) body {
     rgba(0, 0, 0, 0) 0%,
     rgba(0, 0, 0, 0.8) 100%
   );
+}
+
+/* 圆角容器样式 */
+.rounded-container {
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(147, 112, 219, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(147, 112, 219, 0.1),
+    0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.rounded-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(147, 112, 219, 0.4), transparent);
+  animation: shimmerTop 3s ease-in-out infinite;
+}
+
+@keyframes shimmerTop {
+  0%, 100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.dark .rounded-container {
+  background: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(147, 112, 219, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(147, 112, 219, 0.2),
+    0 1px 0 rgba(147, 112, 219, 0.1) inset;
+}
+
+.dark .rounded-container::before {
+  background: linear-gradient(90deg, transparent, rgba(147, 112, 219, 0.6), transparent);
+}
+
+/* 悬停效果 */
+.rounded-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(147, 112, 219, 0.15),
+    0 1px 0 rgba(255, 255, 255, 0.9) inset;
+}
+
+.dark .rounded-container:hover {
+  box-shadow: 
+    0 12px 40px rgba(147, 112, 219, 0.25),
+    0 1px 0 rgba(147, 112, 219, 0.2) inset;
 }
 
 /* 隐藏移动端（<768px）垂直滚动条 */

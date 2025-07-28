@@ -464,7 +464,7 @@ body::after {
   );
 }
 
-/* 优化的圆角容器样式 - 主内容区 */
+/* 优化的圆角容器样式 - 主内容区 - 修改为新布局适配 */
 .rounded-container {
   border-radius: 20px;
   overflow: hidden;
@@ -477,8 +477,9 @@ body::after {
     0 0 0 1px rgba(147, 112, 219, 0.05) inset;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
-  /* 移除左右 margin，通过父容器控制 */
-  margin: 0;
+  /* 确保容器占据完整的分配空间 */
+  height: 100%;
+  width: 100%;
 }
 
 .rounded-container::before {
@@ -536,6 +537,8 @@ body::after {
 @media (max-width: 768px) {
   .rounded-container {
     border-radius: 16px;
+    /* 移动端时恢复全宽 */
+    width: 100% !important;
   }
 }
 

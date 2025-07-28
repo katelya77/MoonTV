@@ -193,7 +193,7 @@ function HomeClient() {
           />
         </div>
 
-        {/* 主内容区域 - 优化最大宽度和居中效果 */}
+        {/* 主内容区域 - 优化为完全居中布局 */}
         <div className='w-full max-w-none mx-auto'>
           {activeTab === 'favorites' ? (
             // 收藏夹视图
@@ -215,9 +215,10 @@ function HomeClient() {
                     </button>
                   )}
                 </div>
-                <div className='justify-start grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
+                {/* 优化收藏夹网格布局，确保在新的居中布局下完美对齐 */}
+                <div className='grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-6 lg:gap-x-8 justify-items-center'>
                   {favoriteItems.map((item) => (
-                    <div key={item.id + item.source} className='w-full'>
+                    <div key={item.id + item.source} className='w-full max-w-44'>
                       <VideoCard
                         query={item.search_title}
                         {...item}

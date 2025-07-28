@@ -183,11 +183,11 @@ const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
             </div>
           )}
 
-          {/* 主内容容器 - 添加圆角和间距 */}
-          <main className='flex-1 md:min-h-0 mb-14 md:mb-0 md:p-4'>
-            <div className='rounded-container min-h-screen md:min-h-[calc(100vh-8rem)]'>
+          {/* 主内容容器 - 增强布局和间距 */}
+          <main className='flex-1 md:min-h-0 mb-14 md:mb-0 md:p-6 lg:p-8'>
+            <div className='rounded-container min-h-screen md:min-h-[calc(100vh-10rem)] max-w-7xl mx-auto'>
               <div 
-                className='p-4 md:p-6'
+                className='p-4 md:p-8 lg:p-10'
                 style={{
                   paddingBottom: 'calc(3.5rem + env(safe-area-inset-bottom))',
                 }}

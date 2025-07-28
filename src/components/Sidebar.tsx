@@ -24,7 +24,7 @@ const SidebarContext = createContext<SidebarContextType>({
 
 export const useSidebar = () => useContext(SidebarContext);
 
-// 可替换为你自己的 logo 图片
+// Logo 组件 - 应用彩虹渐变效果
 const Logo = () => {
   const { siteName } = useSite();
   return (

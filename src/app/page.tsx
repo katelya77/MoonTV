@@ -23,6 +23,30 @@ import ScrollableRow from '@/components/ScrollableRow';
 import { useSite } from '@/components/SiteProvider';
 import VideoCard from '@/components/VideoCard';
 
+// KatelyaTV 底部 Logo 组件
+const BottomKatelyaLogo = () => {
+  return (
+    <div className="bottom-logo-container">
+      {/* 浮动几何形状装饰 */}
+      <div className="floating-shapes">
+        <div className="shape"></div>
+        <div className="shape"></div>
+        <div className="shape"></div>
+        <div className="shape"></div>
+      </div>
+      
+      <div className="text-center">
+        <div className="bottom-logo">
+          KatelyaTV
+        </div>
+        <div className="mt-2 text-sm text-gray-500 dark:text-gray-400 opacity-75">
+          Powered by MoonTV Core
+        </div>
+      </div>
+    </div>
+  );
+};
+
 function HomeClient() {
   const [activeTab, setActiveTab] = useState<'home' | 'favorites'>('home');
   const [hotMovies, setHotMovies] = useState<DoubanItem[]>([]);
@@ -156,7 +180,7 @@ function HomeClient() {
 
   return (
     <PageLayout>
-      <div className='px-2 sm:px-10 py-4 sm:py-8 overflow-visible'>
+      <div className='px-2 sm:px-6 lg:px-10 py-4 sm:py-8 overflow-visible'>
         {/* 顶部 Tab 切换 */}
         <div className='mb-8 flex justify-center'>
           <CapsuleSwitch
@@ -169,44 +193,49 @@ function HomeClient() {
           />
         </div>
 
-        <div className='max-w-[95%] mx-auto'>
+        <div className='max-w-[90%] mx-auto'>
           {activeTab === 'favorites' ? (
             // 收藏夹视图
-            <section className='mb-8'>
-              <div className='mb-4 flex items-center justify-between'>
-                <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
-                  我的收藏
-                </h2>
-                {favoriteItems.length > 0 && (
-                  <button
-                    className='text-sm text-gray-500 hover:text-purple-700 dark:text-gray-400 dark:hover:text-purple-300 transition-colors'
-                    onClick={async () => {
-                      await clearAllFavorites();
-                      setFavoriteItems([]);
-                    }}
-                  >
-                    清空
-                  </button>
-                )}
-              </div>
-              <div className='justify-start grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
-                {favoriteItems.map((item) => (
-                  <div key={item.id + item.source} className='w-full'>
-                    <VideoCard
-                      query={item.search_title}
-                      {...item}
-                      from='favorite'
-                      type={item.episodes > 1 ? 'tv' : ''}
-                    />
-                  </div>
-                ))}
-                {favoriteItems.length === 0 && (
-                  <div className='col-span-full text-center text-gray-500 py-8 dark:text-gray-400'>
-                    暂无收藏内容
-                  </div>
-                )}
-              </div>
-            </section>
+            <>
+              <section className='mb-8'>
+                <div className='mb-4 flex items-center justify-between'>
+                  <h2 className='text-xl font-bold text-gray-800 dark:text-gray-200'>
+                    我的收藏
+                  </h2>
+                  {favoriteItems.length > 0 && (
+                    <button
+                      className='text-sm text-gray-500 hover:text-purple-700 dark:text-gray-400 dark:hover:text-purple-300 transition-colors'
+                      onClick={async () => {
+                        await clearAllFavorites();
+                        setFavoriteItems([]);
+                      }}
+                    >
+                      清空
+                    </button>
+                  )}
+                </div>
+                <div className='justify-start grid grid-cols-3 gap-x-2 gap-y-14 sm:gap-y-20 px-0 sm:px-2 sm:grid-cols-[repeat(auto-fill,_minmax(11rem,_1fr))] sm:gap-x-8'>
+                  {favoriteItems.map((item) => (
+                    <div key={item.id + item.source} className='w-full'>
+                      <VideoCard
+                        query={item.search_title}
+                        {...item}
+                        from='favorite'
+                        type={item.episodes > 1 ? 'tv' : ''}
+                      />
+                    </div>
+                  ))}
+                  {favoriteItems.length === 0 && (
+                    <div className='col-span-full text-center text-gray-500 py-8 dark:text-gray-400'>
+                      暂无收藏内容
+                    </div>
+                  )}
+                </div>
+              </section>
+              
+              {/* 收藏夹页面底部 Logo */}
+              <BottomKatelyaLogo />
+            </>
           ) : (
             // 首页视图
             <>
@@ -354,6 +383,9 @@ function HomeClient() {
                       ))}
                 </ScrollableRow>
               </section>
+              
+              {/* 首页底部 Logo */}
+              <BottomKatelyaLogo />
             </>
           )}
         </div>

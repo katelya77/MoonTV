@@ -53,13 +53,16 @@ const MobileBottomNav = ({ activePath }: MobileBottomNavProps) => {
 
   return (
     <nav
-      className='md:hidden fixed left-0 right-0 z-[600] bg-white/90 backdrop-blur-xl border-t border-purple-200/50 overflow-hidden dark:bg-gray-900/80 dark:border-purple-700/50'
+      className='md:hidden fixed left-0 right-0 z-[600] bg-white/90 backdrop-blur-xl border-t border-purple-200/50 overflow-hidden dark:bg-gray-900/80 dark:border-purple-700/50 shadow-lg'
       style={{
         /* 紧贴视口底部，同时在内部留出安全区高度 */
         bottom: 0,
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}
     >
+      {/* 顶部装饰线 */}
+      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent"></div>
+      
       <ul className='flex items-center'>
         {navItems.map((item) => {
           const active = isActive(item.href);
@@ -67,21 +70,30 @@ const MobileBottomNav = ({ activePath }: MobileBottomNavProps) => {
             <li key={item.href} className='flex-shrink-0 w-1/5'>
               <Link
                 href={item.href}
-                className='flex flex-col items-center justify-center w-full h-14 gap-1 text-xs'
+                className={`flex flex-col items-center justify-center w-full h-14 gap-1 text-xs transition-all duration-200 relative ${
+                  active 
+                    ? 'transform -translate-y-1' 
+                    : 'hover:transform hover:-translate-y-0.5'
+                }`}
               >
+                {/* 激活状态的背景光晕 */}
+                {active && (
+                  <div className="absolute inset-0 bg-purple-500/10 rounded-lg mx-2 my-1 border border-purple-300/20"></div>
+                )}
+                
                 <item.icon
-                  className={`h-6 w-6 ${
+                  className={`h-6 w-6 transition-all duration-200 ${
                     active
-                      ? 'text-purple-600 dark:text-purple-400'
-                      : 'text-gray-500 dark:text-gray-400'
+                      ? 'text-purple-600 dark:text-purple-400 scale-110'
+                      : 'text-gray-500 dark:text-gray-400 hover:text-purple-500 dark:hover:text-purple-300'
                   }`}
                 />
                 <span
-                  className={
+                  className={`transition-all duration-200 font-medium ${
                     active
                       ? 'text-purple-600 dark:text-purple-400'
-                      : 'text-gray-600 dark:text-gray-300'
-                  }
+                      : 'text-gray-600 dark:text-gray-300 hover:text-purple-500 dark:hover:text-purple-300'
+                  }`}
                 >
                   {item.label}
                 </span>

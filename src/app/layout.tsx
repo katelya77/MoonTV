@@ -33,6 +33,18 @@ export const viewport: Viewport = {
   themeColor: '#000000',
 };
 
+// 浮动几何形状组件
+const FloatingShapes = () => {
+  return (
+    <div className="floating-shapes">
+      <div className="shape"></div>
+      <div className="shape"></div>
+      <div className="shape"></div>
+      <div className="shape"></div>
+    </div>
+  );
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -79,6 +91,9 @@ export default async function RootLayout({
       <body
         className={`${inter.className} min-h-screen bg-white text-gray-900 dark:bg-black dark:text-gray-200`}
       >
+        {/* 浮动几何形状装饰 */}
+        <FloatingShapes />
+        
         <ThemeProvider
           attribute='class'
           defaultTheme='system'

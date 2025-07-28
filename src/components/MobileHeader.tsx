@@ -28,7 +28,7 @@ const MobileHeader = ({ showBackButton = false }: MobileHeaderProps) => {
         </div>
       </div>
 
-      {/* 中间：Logo（绝对居中） */}
+      {/* 中间：Logo（绝对居中）- 应用彩虹渐变效果 */}
       <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
         <Link
           href='/'

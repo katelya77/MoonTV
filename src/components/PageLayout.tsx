@@ -73,10 +73,10 @@ const TopNavbar = ({ activePath = '/' }: { activePath?: string }) => {
 
   return (
     <nav className='w-full bg-white/40 backdrop-blur-xl border-b border-purple-200/50 shadow-lg dark:bg-gray-900/70 dark:border-purple-700/50 sticky top-0 z-50'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+      <div className='w-full px-8 lg:px-12 xl:px-16'>
         <div className='flex items-center justify-between h-16'>
-          {/* Logo区域 */}
-          <div className='flex-shrink-0'>
+          {/* Logo区域 - 调整为更靠左 */}
+          <div className='flex-shrink-0 -ml-2'>
             <Link
               href='/'
               className='flex items-center select-none hover:opacity-80 transition-opacity duration-200'
@@ -150,8 +150,8 @@ const TopNavbar = ({ activePath = '/' }: { activePath?: string }) => {
             </div>
           </div>
 
-          {/* 右侧按钮 */}
-          <div className='flex items-center gap-2'>
+          {/* 右侧按钮 - 调整为更靠右，增加间距实现对称效果 */}
+          <div className='flex items-center gap-3 -mr-2'>
             <ThemeToggle />
             <UserMenu />
           </div>
@@ -183,9 +183,9 @@ const PageLayout = ({ children, activePath = '/' }: PageLayoutProps) => {
             </div>
           )}
 
-          {/* 主内容容器 - 增强布局和间距 */}
+          {/* 主内容容器 - 优化布局和间距，左右各留白20% */}
           <main className='flex-1 md:min-h-0 mb-14 md:mb-0 md:p-6 lg:p-8'>
-            <div className='rounded-container min-h-screen md:min-h-[calc(100vh-10rem)] max-w-7xl mx-auto'>
+            <div className='rounded-container min-h-screen md:min-h-[calc(100vh-10rem)] w-full md:max-w-[60%] mx-auto'>
               <div 
                 className='p-4 md:p-8 lg:p-10'
                 style={{

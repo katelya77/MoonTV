@@ -180,7 +180,7 @@ function HomeClient() {
 
   return (
     <PageLayout>
-      <div className='px-2 sm:px-6 lg:px-10 py-4 sm:py-8 overflow-visible'>
+      <div className='px-4 sm:px-8 lg:px-12 py-4 sm:py-8 overflow-visible'>
         {/* 顶部 Tab 切换 */}
         <div className='mb-8 flex justify-center'>
           <CapsuleSwitch
@@ -193,7 +193,8 @@ function HomeClient() {
           />
         </div>
 
-        <div className='max-w-[90%] mx-auto'>
+        {/* 主内容区域 - 优化最大宽度和居中效果 */}
+        <div className='w-full max-w-none mx-auto'>
           {activeTab === 'favorites' ? (
             // 收藏夹视图
             <>
